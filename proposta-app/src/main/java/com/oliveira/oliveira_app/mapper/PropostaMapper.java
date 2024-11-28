@@ -1,5 +1,7 @@
 package com.oliveira.oliveira_app.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -38,4 +40,7 @@ public interface PropostaMapper {
 	@Mapping(target = "renda", source = "usuario.renda")
 	@Mapping(target = "aprovado", source = "aprovado")
 	PropostaResponseDto convertEntitytoResponse(Proposta proposta);
+	
+	
+	List<PropostaResponseDto> convertListEntityToListDto(List<Proposta> propostas);
 }

@@ -1,5 +1,7 @@
 package com.oliveira.oliveira_app.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,13 @@ public class PropostaService {
 		propostaRepository.save(proposta);
 		
 		return PropostaMapper.INSTANCE.convertEntitytoResponse(proposta);
+	}
+	
+	public List<PropostaResponseDto> obterProposta() {
+		
+		List<Proposta> propostas = propostaRepository.findAll();
+		
+		return PropostaMapper.INSTANCE.convertListEntityToListDto(propostas);
 	}
 	
 }
