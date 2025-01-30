@@ -1,5 +1,6 @@
 package com.oliveira.oliveira_app.mapper;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 import org.mapstruct.Mapper;
@@ -24,7 +25,7 @@ public interface PropostaMapper {
 	
 	//Parte proposta
 	@Mapping(target = "id", ignore = true)
-	@Mapping(target = "valorSolicitado", ignore = true)
+	@Mapping(target = "valorSolicitado", source = "valorSolicitado")
 	@Mapping(target = "prazoPagamento", ignore = true)
 	@Mapping(target = "aprovado", ignore = true)
 	@Mapping(target = "integrada", ignore = true)
@@ -38,9 +39,16 @@ public interface PropostaMapper {
 	@Mapping(target = "cpf", source = "usuario.cpf")
 	@Mapping(target = "telefone", source = "usuario.telefone")
 	@Mapping(target = "renda", source = "usuario.renda")
-	@Mapping(target = "aprovado", source = "aprovado")
+	@Mapping(target = "valorSolicitadoFmt", expression = "java(setValorSolicitadoFmt(proposta))" )
 	PropostaResponseDto convertEntitytoResponse(Proposta proposta);
 	
-	
 	List<PropostaResponseDto> convertListEntityToListDto(List<Proposta> propostas);
+	
+	default String setValorSolicitadoFmt(Proposta proposta) {
+		
+	       if (proposta.getValorSolicitado() == null) {
+	            return "Valor inválido"; 
+	        }
+		return NumberFormat.getCurrencyInstance().format(proposta.getValorSolicitado());
+	}
 }
